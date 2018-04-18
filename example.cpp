@@ -1,15 +1,32 @@
-/*#include "include/pybind11/pybind11.h"
-#include <iostream>
-#include <string>
-#include <string.h>*/
+/**
+ Copyright (C) 2018 Kyle Wilson <majorjohn1@mail.com>
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights to
+ use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+ of the Software, and to permit persons to whom the Software is furnished to do
+ so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
 #include "example.h"
 using namespace std;
-int add(int i, int j) {
+/*int add(int i, int j) {
     return i + j;
 }
 int subtract(int i, int j) {
     return i - j;
-}
+}*/
 struct Pet {
     Pet(const string &name) : name(name) {}
     void setName(const string &name_) {name = name_;}
@@ -196,8 +213,8 @@ bool call_home(py::object site,string user_name){
 PYBIND11_MODULE(example, m) {
     m.doc() = "pybind11 example plugin"; // optional module docstring
 
-    m.def("add", &add, "A function which adds two numbers");
-    m.def("sub",&subtract, "A function which subtracts dumbass");
+   // m.def("add", &add, "A function which adds two numbers");
+   // m.def("sub",&subtract, "A function which subtracts dumbass");
     m.def("print_dict",&print_dict);
     m.def("inlist",&pageInList);
     m.def("template_figure_type",&template_figure_type);
