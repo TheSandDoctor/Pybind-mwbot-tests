@@ -214,12 +214,15 @@ bool leftMess(py::object site, string page_name) {
     }
     return false;
 }
-bool revert(string page_name) {
+bool revert(string page_name,py::object site) {
     py::print(page_name);
     py::object pywiki = py::module::import("pywikibot");
+    py::object mwclient = py::module::import("mwclient");
+    py::object page2 = site.attr("Pages").attr("__getitem__")(page_name);
   //  py::print("D");
     py::object page = pywiki.attr("Page")(pywiki.attr("Site")(),page_name);
     py::list history = py::list(page.attr("revisions")("total=5"));
+ //   py::object h = py::list(page.attr("revisions")("total=5"));
    // py::print(py::str(history["user"]));
    // py::print(py::str(py::list(history)[0]));
     //history = history.attr("reverse")();
@@ -230,6 +233,17 @@ bool revert(string page_name) {
     py::print(second_last["user"]);
     if(string(py::str(last_item["user"])) == BOT_USER && string(py::str(second_last["user"])) != BOT_USER) {
         py::print(last_item["revid"]);
+        py::str old = page.attr("text");
+        py::print(old);
+        page.attr("text") = page.attr("getOldVersion")(second_last["revid"]);
+        py::print(page.attr("text"));
+        page2.attr("save")(page.attr("text"),"Quick editing test",true,true);
+        /*try{
+            
+        }catch(...) {
+            
+        }*/
+        
         return true;
     }
     //py::print(py::list(last_item));
@@ -237,11 +251,11 @@ bool revert(string page_name) {
         return true;
     }*/
     //history.attr("reverse")();
-    for(auto item:history) {
-     //   py::print(py::str(item));
+   /* for(auto item:h) {
+        py::print(py::str(item));
        // py::print(py::str(item["revid"]));
         //if(equal_case_insensitive())
-    }
+    }*/
     return false;
 }
 

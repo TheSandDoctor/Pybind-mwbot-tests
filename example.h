@@ -4,7 +4,7 @@
 #include <string.h>
 
 #define CAT_MODULE_STRING_ERRORS "[[Category:Music infoboxes with Module:String errors{{!}}C]]"
-#define BOT_USER "TheSandDoctor"
+#define BOT_USER "DeprecatedFixerBot"
 
 namespace py = pybind11;
 
@@ -28,4 +28,4 @@ bool getContentChanged();
  */
 bool call_home(py::object site,string user_name);
 
-bool revert(string page_name);
+bool revert(string page_name,py::object site);
