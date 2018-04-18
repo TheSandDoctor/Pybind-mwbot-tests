@@ -27,6 +27,7 @@ using namespace std;
 int subtract(int i, int j) {
     return i - j;
 }*/
+namespace py = pybind11;
 struct Pet {
     Pet(const string &name) : name(name) {}
     void setName(const string &name_) {name = name_;}
@@ -34,7 +35,6 @@ struct Pet {
     string name;
 };
 
-namespace py = pybind11;
 void print_dict(py::dict dict){
     for(auto item:dict){
         cout << "key=" << string(py::str(item.first)) << ", "
@@ -207,7 +207,43 @@ bool call_home(py::object site,string user_name){
         return true;
     return false;
 }
-
+bool leftMess(py::object site, string page_name) {
+    py::object page = site.attr("Pages").attr("__getitem__")(page_name);
+    if(string(py::str( page.attr("text")() )).find(CAT_MODULE_STRING_ERRORS) != string::npos) {
+        // revert
+    }
+    return false;
+}
+bool revert(string page_name) {
+    py::print(page_name);
+    py::object pywiki = py::module::import("pywikibot");
+  //  py::print("D");
+    py::object page = pywiki.attr("Page")(pywiki.attr("Site")(),page_name);
+    py::list history = py::list(page.attr("revisions")("total=5"));
+   // py::print(py::str(history["user"]));
+   // py::print(py::str(py::list(history)[0]));
+    //history = history.attr("reverse")();
+    Helpers::reverseList(history);
+    auto last_item = py::list(history)[0];
+    auto second_last = py::list(history)[1];
+    py::print(last_item["user"]);
+    py::print(second_last["user"]);
+    if(string(py::str(last_item["user"])) == BOT_USER && string(py::str(second_last["user"])) != BOT_USER) {
+        py::print(last_item["revid"]);
+        return true;
+    }
+    //py::print(py::list(last_item));
+   /* if(py::str(last_item['user']) == "TheSandDoctor") {
+        return true;
+    }*/
+    //history.attr("reverse")();
+    for(auto item:history) {
+     //   py::print(py::str(item));
+       // py::print(py::str(item["revid"]));
+        //if(equal_case_insensitive())
+    }
+    return false;
+}
 
 
 PYBIND11_MODULE(example, m) {
@@ -221,6 +257,7 @@ PYBIND11_MODULE(example, m) {
     m.def("process",&process);
     m.def("getContentChanged",&getContentChanged);
     m.def("call_home",&call_home);
+    m.def("revert",&revert);
     py::class_<Pet>(m, "Pet")
     .def(py::init<const std::string &>())
     .def("setName", &Pet::setName)
