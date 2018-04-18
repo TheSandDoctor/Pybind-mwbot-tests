@@ -1,0 +1,39 @@
+[OUTPUT] 
+Internal cmake changing into directory: /Users/kylewilson/Downloads/build/tests/test_cmake_build/subdirectory_target
+======== CMake output     ======
+The CXX compiler identification is AppleClang 9.0.0.9000039
+Check for working CXX compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++
+Configuring
+Check for working CXX compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -- works
+Detecting CXX compiler ABI info
+Configuring
+Detecting CXX compiler ABI info - done
+Detecting CXX compile features
+Configuring
+Configuring
+Configuring
+Configuring
+Detecting CXX compile features - done
+Configuring
+Found PythonInterp: /Library/Frameworks/Python.framework/Versions/3.6/bin/python3.6 (found version "3.6.3") 
+Found PythonLibs: /Library/Frameworks/Python.framework/Versions/3.6/lib/libpython3.6m.dylib
+pybind11 v2.3.dev0
+Configuring
+Configuring
+Configuring done
+Generating
+Generating
+Generating done
+Build files have been written to: /Users/kylewilson/Downloads/build/tests/test_cmake_build/subdirectory_target
+======== End CMake output ======
+Change Dir: /Users/kylewilson/Downloads/build/tests/test_cmake_build/subdirectory_target
+
+Run Build Command:"/usr/bin/make" "check"
+Scanning dependencies of target test_cmake_build
+[ 50%] Building CXX object CMakeFiles/test_cmake_build.dir/Users/kylewilson/Downloads/build/tests/test_cmake_build/main.cpp.o
+[100%] Linking CXX shared module test_cmake_build.cpython-36m-darwin.so
+[100%] Built target test_cmake_build
+Scanning dependencies of target check
+test_subdirectory_target imports, runs, and adds: 1 + 2 = 3
+[100%] Built target check
+
