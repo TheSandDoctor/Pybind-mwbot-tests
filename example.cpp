@@ -40,7 +40,7 @@ void print_dict(py::dict dict){
         cout << "key=" << string(py::str(item.first)) << ", "
         << "value="<<string(py::str(item.second))<<std::endl;
     }
-}
+}/*
 int binarySearch(char *word[], int size, string value)
 {
     int first = 0,
@@ -81,7 +81,7 @@ void sortArray(char *string[], const int size)
             }
         }
     }
-}
+}*/
 bool pageInList(std::string page_name,py::list list) {
    // sortArray(py::str(list))
     for(auto item:list) {
