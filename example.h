@@ -45,7 +45,6 @@ namespace Helpers {
 };
 
 using namespace std;
-int subtract(int i, int j);
 void print_dict(py::dict dict);
 bool pageInList(std::string page_name,py::list list);
 string template_figure_type(string temp);

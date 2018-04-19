@@ -292,8 +292,6 @@ bool revert(string page_name,py::object site) {
 PYBIND11_MODULE(example, m) {
     m.doc() = "pybind11 example plugin"; // optional module docstring
 
-   // m.def("add", &add, "A function which adds two numbers");
-   // m.def("sub",&subtract, "A function which subtracts dumbass");
     m.def("print_dict",&print_dict);
     m.def("inlist",&pageInList);
     m.def("template_figure_type",&template_figure_type);
