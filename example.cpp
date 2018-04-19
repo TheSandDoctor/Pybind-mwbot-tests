@@ -20,14 +20,13 @@
  SOFTWARE.
  */
 #include "example.h"
-using namespace std;
 /*int add(int i, int j) {
     return i + j;
 }
 int subtract(int i, int j) {
     return i - j;
 }*/
-namespace py = pybind11;
+
 struct Pet {
     Pet(const string &name) : name(name) {}
     void setName(const string &name_) {name = name_;}
