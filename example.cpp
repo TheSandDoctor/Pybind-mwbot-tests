@@ -82,6 +82,13 @@ void sortArray(char *string[], const int size)
         }
     }
 }*/
+/**
+ * @brief Checks if a given page name is in a python list object
+ *
+ * @param page_name Name of page to check
+ * @param list Python list object to check
+ * @return True if found, false otherwise
+ */
 bool pageInList(std::string page_name,py::list list) {
    // sortArray(py::str(list))
     for(auto item:list) {
@@ -91,6 +98,13 @@ bool pageInList(std::string page_name,py::list list) {
     }
     return false;
 }
+/**
+ * @brief Compare two strings (case insensitive)
+ *
+ * @param s1 first string to compare
+ * @param s2 second string to compare
+ * @return True if equal, false otherwise
+ */
 bool equal_case_insensitive(const string& s1, const string& s2)
 {
     return(0 == strcasecmp(s1.c_str(), s2.c_str()));
@@ -198,6 +212,13 @@ bool getContentChanged(){
         }
     }
 }*/
+/**
+ * @brief Check if the killswitch has been set to false or not.
+ *
+ * @param site mwclient site object
+ * @param user_name User name to change the status page of (/status sub-page MUST exist to use this!)
+ * @return True if it is okay to edit, false if the kill switch has been set to false
+ */
 bool call_home(py::object site,string user_name){
     //py::print(py::str(site));
     py::object page = site.attr("Pages").attr("__getitem__")("User:" + user_name + "/status");
@@ -211,9 +232,18 @@ bool leftMess(py::object site, string page_name) {
     py::object page = site.attr("Pages").attr("__getitem__")(page_name);
     if(string(py::str( page.attr("text")() )).find(CAT_MODULE_STRING_ERRORS) != string::npos) {
         // revert
+        if(revert(page_name,site))
+            return true;
     }
     return false;
 }
+/**
+ * @brief Reverts latest edit to a given page if it was made by the bot user.
+ *
+ * @param page_name Name of page to do the revert on
+ * @param site mwclient site object
+ * @return True if saved, false otherwise
+ */
 bool revert(string page_name,py::object site) {
     py::print(page_name);
     py::object pywiki = py::module::import("pywikibot");
