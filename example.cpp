@@ -34,12 +34,7 @@ struct Pet {
     string name;
 };
 
-void print_dict(py::dict dict){
-    for(auto item:dict){
-        cout << "key=" << string(py::str(item.first)) << ", "
-        << "value="<<string(py::str(item.second))<<std::endl;
-    }
-}/*
+/*
 int binarySearch(char *word[], int size, string value)
 {
     int first = 0,
@@ -97,17 +92,7 @@ bool pageInList(std::string page_name,py::list list) {
     }
     return false;
 }
-/**
- * @brief Compare two strings (case insensitive)
- *
- * @param s1 first string to compare
- * @param s2 second string to compare
- * @return True if equal, false otherwise
- */
-bool equal_case_insensitive(const string& s1, const string& s2)
-{
-    return(0 == strcasecmp(s1.c_str(), s2.c_str()));
-}
+
 string template_figure_type(string temp) {
     if(equal_case_insensitive(temp,"infobox album"))
         return "infobox album";
@@ -196,6 +181,8 @@ py::str process(string text){
     //    py::print(py::str(temp));
     }
     //py::print(py::str(list));
+    //Helpers::createWriteFile("./me.txt",string(py::str(code)).c_str());
+    
     return py::str(code);
 }
 bool getContentChanged(){
@@ -211,22 +198,6 @@ bool getContentChanged(){
         }
     }
 }*/
-/**
- * @brief Check if the killswitch has been set to false or not.
- *
- * @param site mwclient site object
- * @param user_name User name to change the status page of (/status sub-page MUST exist to use this!)
- * @return True if it is okay to edit, false if the kill switch has been set to false
- */
-bool call_home(py::object site,string user_name){
-    //py::print(py::str(site));
-    py::object page = site.attr("Pages").attr("__getitem__")("User:" + user_name + "/status");
-  //  auto text = page.attr("text")();
-    //py::print(py::str(text));
-    if(string(py::str( page.attr("text")() )).find("true") != string::npos)
-        return true;
-    return false;
-}
 bool leftMess(py::object site, string page_name) {
     py::object page = site.attr("Pages").attr("__getitem__")(page_name);
     if(string(py::str( page.attr("text")() )).find(CAT_MODULE_STRING_ERRORS) != string::npos) {
@@ -299,6 +270,10 @@ PYBIND11_MODULE(example, m) {
     m.def("getContentChanged",&getContentChanged);
     m.def("call_home",&call_home);
     m.def("revert",&revert);
+    
+    m.def("makedir",&Helpers::makeDir);
+    m.def("create",&Helpers::createWriteFile2);
+    
     py::class_<Pet>(m, "Pet")
     .def(py::init<const std::string &>())
     .def("setName", &Pet::setName)
