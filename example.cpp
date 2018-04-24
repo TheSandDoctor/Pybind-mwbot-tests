@@ -199,11 +199,18 @@ bool getContentChanged(){
     }
 }*/
 bool leftMess(py::object site, string page_name) {
+    
     py::object page = site.attr("Pages").attr("__getitem__")(page_name);
+  //  cout << "In mess";
     if(string(py::str( page.attr("text")() )).find(CAT_MODULE_STRING_ERRORS) != string::npos) {
+        cout << "in match\n";
         // revert
-        if(revert(page_name,site))
+        if(revert(page_name,site)) {
+            //cout << "revert was true";
+            py::object pyonlymethods = py::module::import("pyonlymethods");
+            pyonlymethods.attr("cust_open")("./errors/","reverted",".txt","a+",string("\n") + string("#[[")+ page_name + string("]]") + string("\n"));
             return true;
+        }
     }
     return false;
 }
@@ -221,7 +228,7 @@ bool revert(string page_name,py::object site) {
     py::object page2 = site.attr("Pages").attr("__getitem__")(page_name);
   //  py::print("D");
     py::object page = pywiki.attr("Page")(pywiki.attr("Site")(),page_name);
-    py::list history = py::list(page.attr("revisions")("total=5"));
+    py::list history = py::list(page.attr("revisions")("total=2"));
  //   py::object h = py::list(page.attr("revisions")("total=5"));
    // py::print(py::str(history["user"]));
    // py::print(py::str(py::list(history)[0]));
@@ -270,9 +277,11 @@ PYBIND11_MODULE(example, m) {
     m.def("getContentChanged",&getContentChanged);
     m.def("call_home",&call_home);
     m.def("revert",&revert);
+    m.def("leftMess",&leftMess);
     
     m.def("makedir",&Helpers::makeDir);
     m.def("create",&Helpers::createWriteFile2);
+    m.def("validf",&Helpers::get_valid_filename);
     
     py::class_<Pet>(m, "Pet")
     .def(py::init<const std::string &>())
